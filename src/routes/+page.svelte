@@ -32,11 +32,16 @@
     <p class="description">A blazing-fast tool to easily generate Rails generator commands from your SQL files.</p>
     <h2 class="inner-title">How does it work?</h2>
     <p>You can use a site like <a href="https://dbdiagram.io">dbdiagram.io</a> to create and export your schema, or use an SQL file from another source.
-      Copy the SQL file contents and paste them into the text area below where prompted.
-      The generator commands will be generated automatically.</p>
+      Copy the SQL file contents and paste them into the text area where prompted.
+      Your sparkling new generator commands will appear like magic.</p>
     <h2 class="inner-title">Some notes...</h2>
-    <p>Currently, this tool only generates commands for <code>resource</code> generators, and this has only been tuned to work with PostgreSQL files.
-      However, stay tuned, as there are plans to add support for more genators and SQL types in the near future!</p>
+    <ul>
+      <li>
+        Currently, this tool only generates commands for <code>resource</code> generators, and this has only been tuned to work with PostgreSQL files.
+      </li>
+    </ul>
+
+      <small class=note><em>However... stay tuned, as there are plans to add support for more genators and SQL types in the near future!</em></small>
     <h2 class="inner-title">Ready to get started?</h2>
     <button class="start-btn" on:click={setUserAccepted}>Click Here!</button>
   </div>
@@ -55,6 +60,10 @@
 </div>
 
 <style>
+  .note {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
   .intro {
     height: 100%;
     padding: 4rem;
