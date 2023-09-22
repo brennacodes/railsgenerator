@@ -18,7 +18,6 @@
   function handleMouseMove(event) {
     let tooltip = document.querySelector('.tooltip');
     tooltip.style.visibility = 'visible';
-    // tooltip.innerHTML = "Click to Copy!"
     topPosition = event.clientY;
     leftPosition = event.clientX;
   }
@@ -27,7 +26,6 @@
     let tooltip = document.querySelector('.tooltip');
     tooltip.style.zIndex = 2;
     tooltip.style.visibility = 'visible';
-    // tooltip.innerHTML = "Click to Copy!"
   }
 
   function handleMouseAway(event) {
