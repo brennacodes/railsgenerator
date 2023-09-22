@@ -18,27 +18,15 @@
   }
 
   .navbar {
+    position: relative;
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
+    width: 100%;
     padding: 10px 20px;
-  }
-
-  /* ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-  } */
-
-  li {
-    margin-right: 20px;
-  }
-
-  a {
-    text-decoration: none;
-    color: var(--link-color);
+    box-shadow: 0px -12px 15px 5px rgba(0, 0, 0, 1);
   }
 </style>

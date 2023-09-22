@@ -56,10 +56,13 @@
 
 <style>
   .intro {
+    height: 100%;
     padding: 20px;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
+		background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
   }
 
   .title {
@@ -67,12 +70,16 @@
     line-height: 1.15;
     font-size: 2rem;
     text-align: center;
+		background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
   }
 
   .description {
     text-align: center;
     line-height: 1.5;
     font-size: 1.5rem;
+    background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
   }
 
   .inner-title {
@@ -80,6 +87,8 @@
     line-height: 1.15;
     font-size: 1.5rem;
     text-align: center;
+    background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
   }
 
   .start-btn {
@@ -105,18 +114,22 @@
 
   .footer {
     position: fixed;
-    height: 30px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 5vh;
     bottom: 0;
     right: 0;
-    margin: 5px;
+    padding: 1.5rem 1.5rem;
+    background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
   }
 
   .icon-link {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    width: 30px;
-    height: 30px;
+    background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
   }
 
   #github-logo {
@@ -131,7 +144,12 @@
   }
 
 	:root {
+    background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
     margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
     font-family: "Inclusive Sans", "Helvetica Neue", Arial, sans-serif;
 	}
 
@@ -142,20 +160,38 @@
 		--text-color-secondary: #cecfca;
     --link-color: #3a6568;
     --gh-icon: url('$assets/github-mark-white.svg');
+    background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
 	}
 
 	:global(body.light) {
-		--bg-color: #e9e9e9;
+    --bg-color: #e9e9e9;
 		--bg-color-secondary: #d3d2d2;
 		--text-color: #1f1f1f;
 		--text-color-seoncdary: #0f0f0f;
 		--link-color: rgb(68, 114, 187);
     --gh-icon: url('$assets/github-mark.png');
+    background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
 	}
 
-  body {
-		background-color: var(--bg-color);
-		color: var(--text-color);
+  :global(body) {
+		background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
+    box-sizing: border-box;
+    contain: strict;
     margin: 0px;
+    width: 100svw !important;
+    height: 100svh !important;
+  }
+
+  :global(head) {
+		background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
+  }
+
+  :global(html) {
+		background-color: var(--bg-color) !important;
+		color: var(--text-color) !important;
   }
 </style>
