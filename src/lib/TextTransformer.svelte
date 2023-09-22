@@ -6,6 +6,11 @@
 
     let container = event.target.parentElement;
     container.style.height = '20svh';
+
+    setTimeout(() => {
+      document.querySelector('.input-text').scrollTop = 0;
+    }, 10);
+    // event.target.innerHTML.scrollToTop = 0;
   }
 </script>
 
