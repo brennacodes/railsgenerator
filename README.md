@@ -1,38 +1,18 @@
-# create-svelte
+# Rails Generator
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+A blazing-fast tool to easily generate Rails generator commands from your SQL files.
 
-## Creating a project
+## Live app [here](www.railsgenerator.com)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## What is it?
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Rails Generator allows you to take your PostgreSQL file and create `rails generate resource...` commands from it. It takes the guesswork out of resource, scaffold, controller, model, migration creation and more, helping to eliminate errors and get your project started faster.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## Development
 
-## Developing
+The app was created over the course of a day. It is written in Svelte and deployed on Vercel.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Screenshots
+<img width="864" alt="Screenshot 2023-09-22 at 1 37 44 PM" src="https://github.com/brennacodes/railsgenerator/assets/98294995/5a192b93-347d-4603-9178-baa6c2b2b5d5">
+<img width="866" alt="Screenshot 2023-09-22 at 1 37 59 PM" src="https://github.com/brennacodes/railsgenerator/assets/98294995/a091e5ab-bf28-4236-9e27-3d17f80bd972">
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
