@@ -1,0 +1,24 @@
+Usage:
+  rails generate blueprinter:blueprint NAME [options]
+
+Options:
+      [--skip-collision-check], [--no-skip-collision-check]  # Skip collision check
+  -d, [--blueprints-dir=BLUEPRINTS_DIR]                      # path to new blueprint
+                                                             # Default: app/blueprints
+  -i, [--identifier=id]                                      # Add an identifer to the generated blueprint, either uses :id or your specified value
+      [--fields=one two three]                               # Manually add specified fields
+      [--detect-fields], [--no-detect-fields]                # Introspect on the model to set fields in the generated blueprint. Will be merged with any manually specified
+  -a, [--associations=one two three]                         # Manually add specified associations
+      [--detect-associations], [--no-detect-associations]    # Introspect on the model to set associations in the generated blueprint. Will be merged with any manually specified
+  -w, [--wrap-at=N]                                          # Maximum length of generated fields line
+                                                             # Default: 80
+      [--indentation=two|four|tab]                           # Indentation of generated file
+                                                             # Default: two
+
+Runtime options:
+  -f, [--force]                    # Overwrite files that already exist
+  -p, [--pretend], [--no-pretend]  # Run but do not make any changes
+  -q, [--quiet], [--no-quiet]      # Suppress status output
+  -s, [--skip], [--no-skip]        # Skip files that already exist
+
+Generates blueprint for ActiveRecord model with the given NAME.

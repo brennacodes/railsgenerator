@@ -1,0 +1,25 @@
+Usage:
+  rails generate active_record:model NAME [field[:type][:index] field[:type][:index]] [options]
+
+Options:
+        [--skip-namespace], [--no-skip-namespace]              # Skip namespace (affects only isolated engines)
+        [--skip-collision-check], [--no-skip-collision-check]  # Skip collision check
+        [--migration], [--no-migration]                        # Indicates when to generate migration
+                                                               # Default: true
+        [--timestamps], [--no-timestamps]                      # Indicates when to generate timestamps
+                                                               # Default: true
+        [--parent=PARENT]                                      # The parent class for the generated model
+        [--indexes], [--no-indexes]                            # Add indexes for references and belongs_to columns
+                                                               # Default: true
+        [--primary-key-type=PRIMARY_KEY_TYPE]                  # The type for primary key
+  --db, [--database=DATABASE]                                  # The database for your model's migration. By default, the current environment's primary database is used.
+  -t,   [--test-framework=NAME]                                # Test framework to be invoked
+
+Runtime options:
+  -f, [--force]                    # Overwrite files that already exist
+  -p, [--pretend], [--no-pretend]  # Run but do not make any changes
+  -q, [--quiet], [--no-quiet]      # Suppress status output
+  -s, [--skip], [--no-skip]        # Skip files that already exist
+
+Description:
+    Create active record files for model generator.

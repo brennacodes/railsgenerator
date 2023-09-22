@@ -1,0 +1,44 @@
+Usage:
+  rails generate scaffold_controller NAME [field:type field:type] [options]
+
+Options:
+      [--skip-namespace], [--no-skip-namespace]              # Skip namespace (affects only isolated engines)
+      [--skip-collision-check], [--no-skip-collision-check]  # Skip collision check
+      [--force-plural], [--no-force-plural]                  # Forces the use of the given model name
+      [--model-name=MODEL_NAME]                              # ModelName to be used
+      [--helper], [--no-helper]                              # Indicates when to generate helper
+  -o, --orm=NAME                                             # ORM to generate the controller for
+                                                             # Default: active_record
+      [--api], [--no-api]                                    # Generates API controller
+                                                             # Default: true
+      [--skip-routes], [--no-skip-routes]                    # Don't add routes to config/routes.rb.
+  -e, [--template-engine=NAME]                               # Template engine to be invoked
+      --resource-route                                       # Indicates when to generate resource route
+                                                             # Default: true
+  -t, [--test-framework=NAME]                                # Test framework to be invoked
+
+Runtime options:
+  -f, [--force]                    # Overwrite files that already exist
+  -p, [--pretend], [--no-pretend]  # Run but do not make any changes
+  -q, [--quiet], [--no-quiet]      # Suppress status output
+  -s, [--skip], [--no-skip]        # Skip files that already exist
+
+Description:
+    Generates a scaffolded controller, its seven RESTful actions and related
+    views. Pass the model name, either CamelCased or under_scored. The
+    controller name is retrieved as a pluralized version of the model name.
+
+    To create a controller within a module, specify the model name as a
+    path like 'parent_module/controller_name'.
+
+    This generates a controller class in app/controllers and invokes helper,
+    template engine and test framework generators.
+
+Example:
+    `bin/rails generate scaffold_controller CreditCard`
+
+    Credit card controller with URLs like /credit_cards.
+        Controller: app/controllers/credit_cards_controller.rb
+        Test:       test/controllers/credit_cards_controller_test.rb
+        Views:      app/views/credit_cards/index.html.erb [...]
+        Helper:     app/helpers/credit_cards_helper.rb
