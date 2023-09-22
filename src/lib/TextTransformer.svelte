@@ -31,5 +31,6 @@
     margin: 20px;
     padding: 10px;
     border-radius: 10px;
+    resize: vertical;
   }
 </style>

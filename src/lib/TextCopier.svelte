@@ -49,7 +49,7 @@
 <div>
   {#if textToCopy !== undefined}
     <div class="tooltip" data-tooltip="Click to copy!" visiblity="collapse" style="top: {topPosition + 5}px; left: {leftPosition + 5}px;">Click to Copy!</div>
-    <textarea class="copy-area" bind:value={textToCopy} on:hover={handleTooltip} on:mousemove={handleMouseMove} on:mouseleave={handleMouseAway} on:click={copyText} alt="Click to Copy"></textarea>
+    <textarea class="copy-area" bind:value={textToCopy} on:hover={handleTooltip} on:mousemove={handleMouseMove} on:mouseleave={handleMouseAway} on:click={copyText} alt="Click to Copy" readonly=true></textarea>
   {/if}
 </div>
 
@@ -61,6 +61,7 @@
     width: 100%;
     height: 60%;
   }
+
   .tooltip {
     position: fixed;
     z-index: 2;
@@ -84,13 +85,12 @@
     font-size: .8rem;
     font-family: monospace;
     line-height: .9rem;
-    height: calc(100svh * .6);
+    height: 100%;
     margin: 20px;
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
     user-select: none;
-
+    resize: vertical;
   }
-
 </style>
