@@ -2,7 +2,7 @@
 
 A blazing-fast tool to easily generate Rails generator commands from your SQL files.
 
-## Live app [here](http://www.railsgenerator.com)
+## Live app [here](https://www.railsgenerator.com)
 
 ## What is it?
 
