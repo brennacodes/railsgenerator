@@ -1,2 +1,15 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+  import { userText } from '$stores/text.js';
+
+  import TextTransformer from '$lib/TextTransformer.svelte';
+  import TextCopier from '$lib/TextCopier.svelte';
+
+  $: copyableText = $userText;
+
+</script>
+
+<TextTransformer />
+
+{#if $userText !== undefined}
+  <TextCopier />
+{/if}
