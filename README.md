@@ -8,6 +8,15 @@ A blazing-fast tool to easily generate Rails generator commands from your SQL fi
 
 Rails Generator allows you to take your PostgreSQL file and create `rails generate resource...` commands from it. It takes the guesswork out of resource, scaffold, controller, model, migration creation and more, helping to eliminate errors and get your project started faster.
 
+## Limitations
+- currently only supports PostgreSQL sql files
+- currently only generates commands for resources
+
+## Planned Development
+- Add support for MySQL & SQLite
+- Add support for all of Rails' generators
+- Add information on what will be generated from the sql files including visual representations of what the output will be after running them
+
 ## Development
 
 The app was created over the course of a day. It is written in Svelte and deployed on Vercel.
