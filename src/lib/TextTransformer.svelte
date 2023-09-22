@@ -4,7 +4,7 @@
   function handlePaste(event) {
     userText.transform();
 
-    let container = event.target;
+    let container = event.target.parentElement;
     container.style.height = '20svh';
   }
 </script>

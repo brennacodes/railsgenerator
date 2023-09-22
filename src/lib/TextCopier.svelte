@@ -40,7 +40,7 @@
 
   afterUpdate(() => {
     copiedText = textToCopy;
-    document.querySelector('.copy-text-container').style.height = '60svh';
+    document.querySelector('.copy-text-container').style.height = '70svh';
   });
 </script>
 
@@ -57,7 +57,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 60%;
+    height: 70svh;
   }
 
   .tooltip {
