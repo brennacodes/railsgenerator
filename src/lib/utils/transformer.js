@@ -1,6 +1,8 @@
 import { userText } from "$stores/text";
 import clipboardy from "clipboardy";
 
+let sampleDDL = "";
+
 function parseSQL(sql, type) {
   const commands = [];
 
