@@ -24,8 +24,12 @@
   .input-text {
     display: flex;
     align-self: stretch;
+    font-size: .8rem;
+    font-family: monospace;
+    line-height: .9rem;
     height: calc(100svh * .6);
     margin: 20px;
+    padding: 10px;
     border-radius: 10px;
   }
 </style>

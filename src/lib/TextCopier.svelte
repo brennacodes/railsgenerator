@@ -1,8 +1,9 @@
 <script>
-	import { afterUpdate } from "svelte";
+	import { onMount, afterUpdate } from "svelte";
   import { userText } from '$stores/text.js';
   import clipboardy from 'clipboardy';
 
+  export let tooltip = false // prevent blank tooltips
   let copiedText = '';
 
   $: textToCopy = $userText;
@@ -12,6 +13,34 @@
     clipboardy.write(text);
   }
 
+  $: topPosition = 0;
+  $: leftPosition = 0;
+
+  function handleMouseMove(event) {
+    let tooltip = document.querySelector('.tooltip');
+    tooltip.style.visibility = 'visible';
+    // tooltip.innerHTML = "Click to Copy!"
+    topPosition = event.clientY;
+    leftPosition = event.clientX;
+  }
+
+  function handleTooltip(event) {
+    let tooltip = document.querySelector('.tooltip');
+    tooltip.style.zIndex = 2;
+    tooltip.style.visibility = 'visible';
+    // tooltip.innerHTML = "Click to Copy!"
+  }
+
+  function handleMouseAway(event) {
+    let tooltip = document.querySelector('.tooltip');
+    tooltip.style.visibility = 'collapse';
+  }
+
+  onMount(() => {
+    let tooltip = document.querySelector('.tooltip');
+    tooltip.style.visibility = 'collapse';
+  });
+
   afterUpdate(() => {
     copiedText = textToCopy;
   });
@@ -19,7 +48,8 @@
 
 <div>
   {#if textToCopy !== undefined}
-    <textarea class="copy-area" on:click={copyText} bind:value={textToCopy}></textarea>
+    <div class="tooltip" data-tooltip="Click to copy!" visiblity="collapse" style="top: {topPosition + 5}px; left: {leftPosition + 5}px;">Click to Copy!</div>
+    <textarea class="copy-area" bind:value={textToCopy} on:hover={handleTooltip} on:mousemove={handleMouseMove} on:mouseleave={handleMouseAway} on:click={copyText} alt="Click to Copy"></textarea>
   {/if}
 </div>
 
@@ -31,14 +61,36 @@
     width: 100%;
     height: 60%;
   }
+  .tooltip {
+    position: fixed;
+    z-index: 2;
+    display: flex;
+    width: auto;
+    height: 2.5rem;
+    border-radius: 6px;
+    background-color: black;
+    text-align: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    padding: 0 0.5rem;
+    font-family: system-ui;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  }
 
   .copy-area {
     display: flex;
     align-self: stretch;
-    height: auto;
+    font-size: .8rem;
+    font-family: monospace;
+    line-height: .9rem;
+    height: calc(100svh * .6);
     margin: 20px;
+    padding: 10px;
     border-radius: 10px;
     cursor: pointer;
+    user-select: none;
+
   }
 
 </style>

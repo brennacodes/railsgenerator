@@ -1,26 +1,6 @@
-<script>
-  import { userText } from '$stores/text.js';
-
-  import TextTransformer from '$lib/TextTransformer.svelte';
-  import TextCopier from '$lib/TextCopier.svelte';
-
-  $: copyableText = $userText;
-
-  let tooltip = "Click to Copy"
-
-</script>
-
-<TextTransformer />
-
-{#if $userText !== undefined}
-  <TextCopier {tooltip}/>
-{/if}
-
-<style>
-
-[data-tooltip] {
+/* [data-tooltip] {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: block;
 }
 
@@ -30,35 +10,31 @@
   opacity: 0;
   pointer-events: none;
 	transition: .2s ease-out;
-	transform: translate(-50%, 5px)
 }
 
 [data-tooltip]:before {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-bottom: 5px;
-  padding: 7px;
-	width: 100%;
-  min-width: 70px;
-	max-width: 250px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  position: fixed;
+  margin-bottom: .5rem;
+  padding: 1rem;
+	width: auto;
+  min-width: auto;
+	max-width: 25dvw;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
   background-color: #000;
   background-color: hsla(0, 0%, 20%, 0.9);
   color: #fff;
   content: attr(data-tooltip);
   text-align: center;
-  font-size: 14px;
-  line-height: 1.2;
+  font-style: system-ui;
+  font-size: 1rem;
+  line-height: .8rem;
 	transition: .2s ease-out
 }
 
 [data-tooltip]:after {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
+  position: fixed;
   width: 0;
   border-top: 5px solid #000;
   border-top: 5px solid hsla(0, 0%, 20%, 0.9);
@@ -80,5 +56,4 @@
 [data-tooltip=false]:hover:after {
   visibility: hidden;
   opacity: 0;
-}
-</style>
+} */
