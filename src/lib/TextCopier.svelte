@@ -72,6 +72,7 @@
     color: var(--bg-color);
     text-align: center;
     justify-content: center;
+    align-items: center;
     padding: 0 0.5rem;
     font-family: system-ui;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
