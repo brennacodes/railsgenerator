@@ -1,15 +1,8 @@
 <script>
   import { userText } from '$stores/text.js';
-  import { pasteToGenerate } from '$lib/utils/transformer.js';
   import TextTransformer from '$lib/TextTransformer.svelte';
   import TextCopier from '$lib/TextCopier.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
-
-  let pasted = false;
-  function handlePaste() {
-    userText.transform();
-    pasted = true;
-  }
 
   let userAccepted = false;
 
@@ -35,9 +28,9 @@
     <button class="start-btn" on:click={setUserAccepted}>Click Here!</button>
   </div>
 {:else}
-  <TextTransformer on:paste={handlePaste}/>
+  <TextTransformer />
 
-  {#if pasted == true}
+  {#if $userText != ''}
     <TextCopier />
   {/if}
 {/if}

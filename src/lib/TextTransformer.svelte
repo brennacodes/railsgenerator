@@ -1,13 +1,17 @@
 <script>
+  import { userText } from '$stores/text.js';
 
+  function handlePaste() {
+    userText.transform();
+  }
 </script>
 
-<div on:paste>
-  <textarea class="input-text" on:paste placeholder="Paste your SQL here" ></textarea>
+<div class="input-container">
+  <textarea class="input-text" on:paste={handlePaste} placeholder="Paste your SQL here" ></textarea>
 </div>
 
 <style>
-  div {
+  .input-container {
     display: flex;
     flex-direction: column;
     align-items: center;
