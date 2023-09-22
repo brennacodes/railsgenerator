@@ -29,7 +29,7 @@
 {#if userAccepted == false}
   <div class="intro">
     <h1 class="title">Rails Generator</h1>
-    <p class="description">A lightweight tool to quickly and easilty generate Rails generator commands from your SQL files.</p>
+    <p class="description">A blazing-fast tool to easily generate Rails generator commands from your SQL files.</p>
     <h2 class="inner-title">How does it work?</h2>
     <p>You can use a site like <a href="https://dbdiagram.io">dbdiagram.io</a> to create and export your schema, or use an SQL file from another source.
       Copy the SQL file contents and paste them into the text area below where prompted.
@@ -57,7 +57,7 @@
 <style>
   .intro {
     height: 100%;
-    padding: 20px;
+    padding: 4rem;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -78,6 +78,7 @@
     text-align: center;
     line-height: 1.5;
     font-size: 1.5rem;
+    margin: 1rem 4rem 2rem 4rem;
     background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
   }
@@ -152,7 +153,7 @@
     padding: 0px;
     width: 100%;
     height: 100%;
-    font-family: "Inclusive Sans", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Nunito", "Helvetica Neue", Arial, sans-serif;
 	}
 
 	:global(body.dark) {
