@@ -4,14 +4,19 @@
 </script>
 
 <nav class="navbar">
-  <ul>
+  <h3 class="site-name">Rails Generator</h3>
+  <!-- <ul>
     <li><a href="/about">About</a></li>
     <li><a href="/contact">Contact</a></li>
-  </ul>
+  </ul> -->
   <ModeToggle />
 </nav>
 
 <style>
+  .site-name {
+    margin: 0;
+  }
+
   .navbar {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -21,12 +26,12 @@
     padding: 10px 20px;
   }
 
-  ul {
+  /* ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-  }
+  } */
 
   li {
     margin-right: 20px;
