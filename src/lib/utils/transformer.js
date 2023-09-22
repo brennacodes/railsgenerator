@@ -52,7 +52,7 @@ function parseSQL(sql, type) {
           } else if (column.name.match(/_at$/)) {
             return '';
           } else if (column.name.match(/password/)) {
-            return `${column.name}:string ${column.name}_confirmation:string`;
+            return `${column.name}_digest:string`;
           } else {
             return `${column.name}:${column.type}`;
           }
