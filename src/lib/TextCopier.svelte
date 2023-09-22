@@ -47,7 +47,8 @@
 </script>
 
 <div>
-  {#if textToCopy !== undefined}
+  {#if $userText != ''}
+  {@debug $userText}
     <div class="tooltip" data-tooltip="Click to copy!" visiblity="collapse" style="top: {topPosition + 5}px; left: {leftPosition + 5}px;">Click to Copy!</div>
     <textarea class="copy-area" bind:value={textToCopy} on:hover={handleTooltip} on:mousemove={handleMouseMove} on:mouseleave={handleMouseAway} on:click={copyText} alt="Click to Copy" readonly=true></textarea>
   {/if}
@@ -55,6 +56,8 @@
 
 <style>
   div {
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,11 +72,10 @@
     width: auto;
     height: 2.5rem;
     border-radius: 6px;
-    background-color: black;
+    background-color: var(--text-color);
+    color: var(--bg-color);
     text-align: center;
     justify-content: center;
-    background-color: black;
-    color: white;
     padding: 0 0.5rem;
     font-family: system-ui;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
@@ -92,5 +94,7 @@
     cursor: pointer;
     user-select: none;
     resize: vertical;
+    background-color: var(--bg-color-secondary);
+    color: var(--text-color-secondary);
   }
 </style>

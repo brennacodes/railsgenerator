@@ -19,6 +19,8 @@
     align-items: center;
     width: 100%;
     height: 60%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
   }
 
   .input-text {
@@ -32,5 +34,7 @@
     padding: 10px;
     border-radius: 10px;
     resize: vertical;
+    background-color: var(--bg-color-secondary);
+    color: var(--text-color-secondary);
   }
 </style>

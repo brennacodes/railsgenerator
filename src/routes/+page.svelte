@@ -1,15 +1,15 @@
 <script>
+  // import '$src/app.css'
+  import { afterUpdate, setContext } from 'svelte';
   import { userText } from '$stores/text.js';
-
   import TextTransformer from '$lib/TextTransformer.svelte';
   import TextCopier from '$lib/TextCopier.svelte';
+	import Navbar from '$lib/components/Navbar.svelte';
 
-  $: copyableText = $userText;
-
-  let tooltip = "Click to Copy"
-
+  let tooltip = "Click to Copy";
 </script>
 
+<Navbar />
 <TextTransformer />
 
 {#if $userText !== undefined}
@@ -17,68 +17,30 @@
 {/if}
 
 <style>
+	:root {
+    margin: 0px;
+    font-family: "Inclusive Sans", "Helvetica Neue", Arial, sans-serif;
+	}
 
-[data-tooltip] {
-  position: relative;
-  z-index: 2;
-  display: block;
-}
+	:global(body.dark) {
+		--bg-color: #19191c;
+		--bg-color-secondary: #202024;
+		--text-color: #bcbdb6;
+		--text-color-secondary: #cecfca;
+    --link-color: #3a6568;
+	}
 
-[data-tooltip]:before,
-[data-tooltip]:after {
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-	transition: .2s ease-out;
-	transform: translate(-50%, 5px)
-}
+	:global(body.light) {
+		--bg-color: #e9e9e9;
+		--bg-color-secondary: #d3d2d2;
+		--text-color: #1f1f1f;
+		--text-color-seoncdary: #0f0f0f;
+		--link-color: rgb(68, 114, 187);
+	}
 
-[data-tooltip]:before {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-bottom: 5px;
-  padding: 7px;
-	width: 100%;
-  min-width: 70px;
-	max-width: 250px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #000;
-  background-color: hsla(0, 0%, 20%, 0.9);
-  color: #fff;
-  content: attr(data-tooltip);
-  text-align: center;
-  font-size: 14px;
-  line-height: 1.2;
-	transition: .2s ease-out
-}
-
-[data-tooltip]:after {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  width: 0;
-  border-top: 5px solid #000;
-  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-  content: " ";
-  font-size: 0;
-  line-height: 0;
-}
-
-[data-tooltip]:hover:before,
-[data-tooltip]:hover:after {
-  visibility: visible;
-  opacity: 1;
-	transform: translate(-50%, 0)
-}
-
-[data-tooltip=false]:hover:before,
-[data-tooltip=false]:hover:after {
-  visibility: hidden;
-  opacity: 0;
-}
+  body {
+		background-color: var(--bg-color);
+		color: var(--text-color);
+    margin: 0px;
+  }
 </style>
