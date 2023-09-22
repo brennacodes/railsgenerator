@@ -1,15 +1,9 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-  import { pasteToGenerate } from '$lib/utils/transformer.js';
-  import { userText } from '$stores/text.js';
-  let inputText = '';
-
-  $userText = inputText;
 
 </script>
 
-<div>
-  <textarea class="input-text" bind:value={inputText} on:paste={pasteToGenerate} placeholder="Paste your text here" ></textarea>
+<div on:paste>
+  <textarea class="input-text" on:paste placeholder="Paste your SQL here" ></textarea>
 </div>
 
 <style>

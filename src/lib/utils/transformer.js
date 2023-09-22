@@ -73,7 +73,7 @@ export async function pasteToGenerate() {
 		try {
 			const text = await clipboardy.read();
       let joined = parseSQL(text, "resource").join("\n");
-      userText.set(joined);
+      userText.update(joined);
 		} catch(error) {
 			console.error("Failed to read clipboard contents: ", error);
 		}

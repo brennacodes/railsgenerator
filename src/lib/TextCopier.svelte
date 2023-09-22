@@ -3,7 +3,6 @@
   import { userText } from '$stores/text.js';
   import clipboardy from 'clipboardy';
 
-  export let tooltip = false // prevent blank tooltips
   let copiedText = '';
 
   $: textToCopy = $userText;
@@ -46,15 +45,13 @@
   });
 </script>
 
-<div>
-  {#if $userText != ''}
-    <div class="tooltip" data-tooltip="Click to copy!" visiblity="collapse" style="top: {topPosition + 5}px; left: {leftPosition + 5}px;">Click to Copy!</div>
-    <textarea class="copy-area" bind:value={textToCopy} on:hover={handleTooltip} on:mousemove={handleMouseMove} on:mouseleave={handleMouseAway} on:click={copyText} alt="Click to Copy" readonly=true></textarea>
-  {/if}
+<div class="copy-text-container">
+  <div class="tooltip" data-tooltip="Click to copy!" visiblity="collapse" style="top: {topPosition + 5}px; left: {leftPosition + 5}px;">Click to Copy!</div>
+  <textarea class="copy-area" bind:value={textToCopy} on:hover={handleTooltip} on:mousemove={handleMouseMove} on:mouseleave={handleMouseAway} on:click={copyText} alt="Click to Copy" readonly=true></textarea>
 </div>
 
 <style>
-  div {
+  .copy-text-container {
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;

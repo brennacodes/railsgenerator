@@ -1,12 +1,15 @@
 <script>
-  // import '$src/app.css'
-  import { afterUpdate, setContext } from 'svelte';
   import { userText } from '$stores/text.js';
+  import { pasteToGenerate } from '$lib/utils/transformer.js';
   import TextTransformer from '$lib/TextTransformer.svelte';
   import TextCopier from '$lib/TextCopier.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 
-  let tooltip = "Click to Copy";
+  let pasted = false;
+  function handlePaste() {
+    userText.transform();
+    pasted = true;
+  }
 
   let userAccepted = false;
 
@@ -32,11 +35,11 @@
     <button class="start-btn" on:click={setUserAccepted}>Click Here!</button>
   </div>
 {:else}
-  <TextTransformer />
-{/if}
+  <TextTransformer on:paste={handlePaste}/>
 
-{#if $userText !== undefined}
-  <TextCopier {tooltip}/>
+  {#if pasted == true}
+    <TextCopier />
+  {/if}
 {/if}
 
 <style>
