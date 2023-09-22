@@ -119,6 +119,8 @@
     height: 5vh;
     bottom: 0;
     right: 0;
+    display: flex;
+    justify-content: center;
     padding: 1.5rem 1.5rem;
     background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
@@ -126,7 +128,7 @@
 
   .icon-link {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
@@ -159,7 +161,7 @@
 		--text-color: #bcbdb6;
 		--text-color-secondary: #cecfca;
     --link-color: #3a6568;
-    --gh-icon: url('$assets/github-mark-white.svg');
+    --gh-icon: url('./src/assets/github-mark-white.svg');
     background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
 	}
@@ -170,7 +172,7 @@
 		--text-color: #1f1f1f;
 		--text-color-seoncdary: #0f0f0f;
 		--link-color: rgb(68, 114, 187);
-    --gh-icon: url('$assets/github-mark.png');
+    --gh-icon: url('./src/assets/github-mark.png');
     background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
 	}
