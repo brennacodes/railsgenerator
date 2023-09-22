@@ -1,8 +1,11 @@
 <script>
   import { userText } from '$stores/text.js';
 
-  function handlePaste() {
+  function handlePaste(event) {
     userText.transform();
+
+    let container = event.target;
+    container.style.height = '20svh';
   }
 </script>
 

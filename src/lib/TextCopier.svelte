@@ -42,6 +42,7 @@
 
   afterUpdate(() => {
     copiedText = textToCopy;
+    document.querySelector('.copy-text-container').style.height = '60svh';
   });
 </script>
 

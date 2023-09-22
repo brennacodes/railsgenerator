@@ -21,6 +21,7 @@ const config = {
         $lib: path.resolve('./src/lib'),
         $routes: path.resolve('./src/routes'),
         $stores: path.resolve('./src/stores'),
+        $assets: path.resolve('./src/assets'),
       }
     }
 
