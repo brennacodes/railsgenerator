@@ -17,15 +17,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
+    width: 100%;
+    height: 60%;
   }
 
   .input-text {
-    width: 100%;
-    height: min(40%, 40vh);
-    resize: vertical;
-    overflow: scroll;
-    padding: 10px;
-    margin-bottom: 10px;
+    display: flex;
+    align-self: stretch;
+    height: calc(100svh * .6);
+    margin: 20px;
+    border-radius: 10px;
   }
 </style>
