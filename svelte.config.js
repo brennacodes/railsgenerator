@@ -24,8 +24,8 @@ const config = {
         $stores: path.resolve('./src/stores'),
         $assets: path.resolve('./src/assets'),
         $images: path.resolve('./src/assets/images'),
-        $generators: path.resolve('./src/assets/rails_generators'),
         $components: path.resolve('./src/lib/components'),
+        $generators: path.resolve('./public/rails_generators'),
       }
     }
 
