@@ -1,17 +1,13 @@
 <script>
 	import { generatorInfo } from '$stores/generator_info.js';
   import { onMount } from 'svelte';
-  import { generateImportStatements } from '$utils/importer.js';
-  import { generators, generateFileArray } from '$utils/generators.js';
-  // generateImportStatments(generateFileArray(generators));
+  import { generators } from '$utils/generators.js';
 
-  const infoToDisplay = $$props['infoToDisplay']; // dynamic module name
-  const reader = new FileReader();
+  const infoToDisplay = $$props['infoToDisplay'];
 
   const loadInfo = async () => {
     try {
       const url = `rails_generators/${infoToDisplay}.txt`;
-      console.log('Fetching URL:', url);
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch the text file.');

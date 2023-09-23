@@ -11,7 +11,10 @@
   $: alt = colorScheme == "light" ? moonAlt : sunAlt;
 
   onMount(() => {
-    window.document.body.classList.contains(colorScheme) ? null : window.document.body.classList.add(colorScheme);
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? colorScheme = "dark" : colorScheme = "light";
+
+    updateColorScheme();
+
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
         window.document.body.classList = "";
         colorScheme = event.matches ? "dark" : "light";
@@ -19,22 +22,25 @@
     });
   });
 
-	function toggle() {
+	function updateColorScheme() {
     if (window.document.body.classList.contains('light')) {
         window.document.body.classList.remove('light');
         window.document.body.classList.add('dark');
         colorScheme = "dark";
-    } else {
+    } else if (window.document.body.classList.contains('dark')) {
         window.document.body.classList.remove('dark');
         window.document.body.classList.add('light');
         colorScheme = "light";
+    } else {
+        window.document.classList = "";
+        window.document.body.classList.add(colorScheme);
     }
   };
 
   setContext('colorScheme', colorScheme);
 </script>
 
-<img width="30" height="30" {src} {alt} on:click={toggle} class="mode-toggle"/>
+<img width="30" height="30" {src} {alt} on:click={updateColorScheme} class="mode-toggle"/>
 
 <style>
 	.mode-toggle {
