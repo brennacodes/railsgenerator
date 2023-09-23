@@ -1,7 +1,19 @@
+<script>
+  import { afterUpdate } from 'svelte';
+  import ghWhite from '$images/github-mark-white.svg';
+  import ghBlack from '$images/github-mark.png';
+
+  $: githubIcon = '';
+
+  afterUpdate(() => {
+    githubIcon = document.body.classList.contains("light") ? ghBlack : ghWhite ;
+  });
+</script>
+
 
 <div class="footer">
   <a class="icon-link" href="www.github.com/brennacodes" target="_blank">
-    <div id="github-logo" alt="GitHub Logo" width="20" height="20"/>
+    <img id="github-logo" src={githubIcon} alt="GitHub Logo" width="20" height="20"/>
   </a>
 </div>
 
@@ -15,6 +27,7 @@
     box-sizing: border-box;
     padding: 0.5rem;
     box-shadow: 0px 12px 15px 5px rgba(0, 0, 0, 1);
+    background-color: var(--bg-color) !important;
   }
 
   .icon-link {
@@ -28,7 +41,6 @@
   }
 
   #github-logo {
-    background-image: var(--gh-icon);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

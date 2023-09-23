@@ -56,6 +56,7 @@
     modalContent.style.height = '100%';
     modalContent.style.width = '100%';
     modalContent.style.fontSize = '.75rem'
+    modalContent.style.overflow = 'unset';
 
 
     modal.scrollTop = modal.scrollHeight;
@@ -77,9 +78,12 @@
     overflow: scroll;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    overflow-wrap: break-word;
     align-items: center;
     text-wrap: wrap;
     height: 100%;
+    width: 100%;
     font-family: monospace;
   }
 

@@ -3,8 +3,8 @@
   import { generator } from "$stores/generator.js";
   import { userText } from '$stores/text.js';
 
-  import ghWhite from '$assets/github-mark-white.svg';
-  import ghBlack from '$assets/github-mark.png';
+  import ghWhite from '$images/github-mark-white.svg';
+  import ghBlack from '$images/github-mark.png';
 
   import Navbar from '$lib/components/Navbar.svelte';
   import Footer from '$lib/components/Footer.svelte';
@@ -195,7 +195,7 @@
 		--text-color: #bcbdb6;
 		--text-color-secondary: #cecfca;
     --link-color: #3a6568;
-    --gh-icon: url('./src/assets/github-mark-white.svg');
+    --gh-icon: url('$images/github-mark-white.svg');
     background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
 	}
@@ -206,7 +206,7 @@
 		--text-color: #1f1f1f;
 		--text-color-seoncdary: #0f0f0f;
 		--link-color: rgb(68, 114, 187);
-    --gh-icon: url('./src/assets/github-mark.png');
+    --gh-icon: url('$images/github-mark.png');
     background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
 	}

@@ -32,7 +32,7 @@
 
     try {
       selectedOption = selectedOption.replace(/:/g, '_');
-      const response = await fetch(`./rails_generators/${group.toLowerCase()}_${selectedOption}.txt`);
+      const response = await fetch(`src/assets/rails_generators/${group.toLowerCase()}_${selectedOption}.txt`);
       let content = await response.text();
       fileContents.update(content);
     } catch (error) {
