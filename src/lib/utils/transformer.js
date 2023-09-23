@@ -1,82 +1,105 @@
 import { userText } from "$stores/text";
+// import { generator } from "$stores/generator";
 import clipboardy from "clipboardy";
 
-let sampleDDL = "";
+  let toFilter = ["ALTER TABLE", "COMMENT ON COLUMN"];
 
-function parseSQL(sql, type) {
-  const commands = [];
+  let mapping = {
+    "bigint": "integer",
+    "character": "string",
+    "uuid": "uuid",
+    "timestamp": "timestamp",
+    "boolean": "boolean",
+    "text": "text",
+    "integer": "integer",
+    "jsonb": "jsonb",
+    "float": "float",
+    "date": "date",
+    "datetime": "datetime",
+    "decimal": "decimal",
+    "binary": "binary",
+    "time": "time",
+  }
 
-  const lines = sql.split('\n');
-
-  // Filter out lines that start with "COMMENT ON COLUMN" or "ALTER TABLE"
-  const filteredLines = lines.filter(line => {
-    return !(line.startsWith('COMMENT ON COLUMN') || line.startsWith('ALTER TABLE'));
-  });
-
-
-  // Split the SQL file into individual CREATE TABLE statements
-  const createTableStatements = filteredLines.join('\n').split('CREATE TABLE ');
-
-  createTableStatements.forEach((statement) => {
-    if (statement.trim() !== '') {
-      const lines = statement.split('\n');
-
-      // Extract table name from the first line
-      // Remove "s" to make it singular
-      let tableName = lines[0].trim().replace(/"/g, '').replace(" (", "");
-      tableName = tableName.substring(0, tableName.length - 1);
-
-      // Initialize an array to store column definitions
-      const columns = [];
-
-      lines.slice(1, -1).forEach((line) => {
-        // Extract column name and data type from each line
-        const matches = line.trim().match(/"([^"]+)"\s+([^,]+)/);
-
-        if (matches && matches.length === 3) {
-          const columnName = matches[1];
-          const dataType = matches[2];
-
-          columns.push({ name: columnName, type: dataType });
-        }
-      });
-
-      const beginningCommand = `rails generate ${type} ${tableName}`;
-
-      // Generate the Rails command for the table
-      const endingCommand = `${columns
-        .map((column) => {
-          if (column.name === 'id') {
-            return '';
-          } else if (column.name.match(/_id$/)) {
-            let colName = column.name.replace(/_id$/, '');
-            return `${colName}:references`;
-          } else if (column.name.match(/_at$/)) {
-            return '';
-          } else if (column.name.match(/password/)) {
-            return `${column.name}_digest:string`;
-          } else {
-            return `${column.name}:${column.type}`;
-          }
-        })
-        .join(' ')}`;
-
-      const railsCommand = `${beginningCommand}${endingCommand}`;
-
-      commands.push(railsCommand);
+  function setFilters(tableType) {
+    switch (tableType) {
+      case "DDL":
+        toFilter = ["--", "CREATE UNIQUE", "CREATE INDEX", "CREATE SEQUENCE", "ALTER SEQUENCE", "COMMENT ON COLUMN"];
+        break;
+      case "PostgreSQL":
+        toFilter;
+        break;
+      default:
+        toFilter;
     }
-  });
+  }
 
-  return commands;
-}
+  function filterLines(lines) {
+    return lines.filter(line => {
+      return !(toFilter.some(filter => line.startsWith(filter)));
+    });
+  }
 
+  function createDirectives(filteredLines) {
+    let directives = {};
+    filteredLines.forEach((line) => {
+      const id = /_id$/i;
+      const ddlId = /\(id\)/i;
+      let splitLine = line.split(' ').map(element => element.replace(/^[^a-zA-Z]+|[^a-zA-Z]+$/g, ''));
 
-export async function pasteToGenerate() {
-		try {
-			const text = await clipboardy.read();
-      let joined = parseSQL(text, "resource").join("\n");
-      userText.update(joined);
-		} catch(error) {
-			console.error("Failed to read clipboard contents: ", error);
-		}
-}
+      if (splitLine[0] == 'CREATE' && splitLine[1] == 'TABLE') {
+        directives["table"] = splitLine[2];
+      } else if (splitLine[0] == 'id') {
+        null
+      } else if (splitLine[0] == " " || splitLine[0] == undefined || splitLine[0] == "created_at" || splitLine[0] == "updated_at") {
+        null
+      } else if (id.test(splitLine[0]) || ddlId.test(splitLine[splitLine.length - 1])) {
+        directives[splitLine[0].replace(/_id$/i, '')] = "references";
+      } else {
+        directives[splitLine[0]] = mapping[splitLine[1]];
+      }
+
+    });
+    return directives;
+  }
+
+  function parseSQL(sql, type, generator) {
+    setFilters(type);
+
+    const lines = sql.split('\n');
+
+    // Filter out lines that start with "COMMENT ON COLUMN" or "ALTER TABLE"
+    const filteredLines = filterLines(lines)
+      .filter(element => element !== '')
+      .map(element => element.trimLeft())
+      .filter(element => /[a-zA-Z]/.test(element));
+
+    let directives = createDirectives(filteredLines);
+
+    // Split the SQL into individual CREATE TABLE statements
+    const generatorCommands = []
+    for (const key in directives) {
+      if (key == 'table') {
+        let beginning = `rails generate ${generator} ${directives[key].substring(0, directives[key].length - 1)}`;
+        generatorCommands.push(beginning);
+      } else {
+        let ending = `${key}:${directives[key]}`;
+        generatorCommands.push(ending);
+      }
+    };
+    return generatorCommands.join(' ');
+  }
+
+  function updateStores(text) {
+    userText.update(text);
+  }
+
+  export async function handleSQL(generator) {
+    try {
+      const text = await clipboardy.read();
+      let parsed = parseSQL(text, "DDL", generator)
+      updateStores(parsed);
+    } catch(error) {
+      console.error("Failed to read clipboard contents: ", error);
+    }
+  }
