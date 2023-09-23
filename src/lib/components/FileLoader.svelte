@@ -31,6 +31,7 @@
     const group = document.getElementById(selectedOption).classList[0];
 
     try {
+      selectedOption = selectedOption.replace(/:/g, '_');
       const response = await fetch(`./rails_generators/${group.toLowerCase()}_${selectedOption}.txt`);
       let content = await response.text();
       fileContents.update(content);
@@ -67,6 +68,7 @@
     align-items: center;
     justify-content: space-around;
     gap: 1rem;
+
     margin-top: 1.5rem;
     margin-bottom: inherit;
     margin-left: 1.5rem;
