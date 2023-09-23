@@ -75,7 +75,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: calc(100% - 8vh - 6vh);
     width: 100%;
     box-sizing: border-box;
