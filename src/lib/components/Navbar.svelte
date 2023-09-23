@@ -4,10 +4,6 @@
 
 <nav class="navbar">
   <h3 class="site-name">Rails Generator</h3>
-  <!-- <ul>
-    <li><a href="/about">About</a></li>
-    <li><a href="/contact">Contact</a></li>
-  </ul> -->
   <ModeToggle />
 </nav>
 
