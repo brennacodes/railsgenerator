@@ -12,7 +12,7 @@
 
 
 <div class="footer">
-  <a class="icon-link" href="www.github.com/brennacodes" target="_blank">
+  <a class="icon-link" href="https://www.github.com/brennacodes" target="_blank">
     <img id="github-logo" src={githubIcon} alt="GitHub Logo" width="20" height="20"/>
   </a>
 </div>
