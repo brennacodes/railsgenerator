@@ -103,3 +103,9 @@ import clipboardy from "clipboardy";
       console.error("Failed to read clipboard contents: ", error);
     }
   }
+
+  export async function handleExamples(generator) {
+      const text = '';
+      let parsed = parseSQL(text, "DDL", generator)
+      updateStores(parsed);
+  }
