@@ -1,8 +1,11 @@
 <script>
   import { userText } from '$stores/text.js';
+  import { generator } from '$stores/generator.js';
+
+  $: generatorType = $generator;
 
   function handlePaste(event) {
-    userText.transform();
+    userText.transform(generatorType);
 
     let container = event.target.parentElement;
     container.style.height = '20svh';
@@ -10,12 +13,11 @@
     setTimeout(() => {
       document.querySelector('.input-text').scrollTop = 0;
     }, 10);
-    // event.target.innerHTML.scrollToTop = 0;
   }
 </script>
 
 <div class="input-container">
-  <textarea class="input-text" on:paste={handlePaste} placeholder="Paste your SQL here" ></textarea>
+  <textarea name="input-text" class="input-text" on:paste={handlePaste} placeholder="Paste your SQL here" ></textarea>
 </div>
 
 <style>
