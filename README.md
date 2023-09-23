@@ -21,6 +21,8 @@ Rails Generator allows you to take your PostgreSQL file and create `rails genera
 The app was created over the course of a two days. It is written in Svelte and deployed on Vercel.
 
 ## Screenshots
+![rail_generator](https://github.com/brennacodes/railsgenerator/assets/98294995/0b4c1014-f129-42d6-9a42-3995aee02945)
+
 <img width="350" alt="Textarea screen" src="https://github.com/brennacodes/railsgenerator/assets/98294995/4171ac3e-9a79-484a-910d-bf76218a26c4">
 <img width="350" alt="Generator info" src="https://github.com/brennacodes/railsgenerator/assets/98294995/f919e96d-8b5e-4a28-b449-f9efe55cee76">
 <img width="350" alt="Generator Options" src="https://github.com/brennacodes/railsgenerator/assets/98294995/d31278b3-10c6-4e59-affc-51007fc5392c">
