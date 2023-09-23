@@ -14,6 +14,7 @@
     width: 100%;
     box-sizing: border-box;
     padding: 0.5rem;
+    box-shadow: 0px 12px 15px 5px rgba(0, 0, 0, 1);
   }
 
   .icon-link {

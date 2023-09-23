@@ -28,5 +28,6 @@
     height: 8vh;
     padding: 10px 20px;
     box-shadow: 0px -12px 15px 5px rgba(0, 0, 0, 1);
+    z-index: 10;
   }
 </style>
