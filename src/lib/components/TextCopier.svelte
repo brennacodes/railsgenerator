@@ -3,8 +3,6 @@
   import { userText } from '$stores/text.js';
   import clipboardy from 'clipboardy';
 
-  let copiedText = '';
-
   $: textToCopy = $userText;
 
   function copyText(event) {
@@ -39,14 +37,17 @@
   });
 
   afterUpdate(() => {
-    copiedText = textToCopy;
-    document.querySelector('.copy-text-container').style.height = '70svh';
+    // copiedText = textToCopy.split('\n');
+    // document.querySelector('.copy-text-container').style.height = '70svh';
   });
 </script>
 
 <div class="copy-text-container">
   <div class="tooltip" data-tooltip="Click to copy!" visiblity="collapse" style="top: {topPosition + 5}px; left: {leftPosition + 5}px;">Click to Copy!</div>
-  <textarea name="copy-text" class="copy-area" bind:value={textToCopy} on:hover={handleTooltip} on:mousemove={handleMouseMove} on:mouseleave={handleMouseAway} on:click={copyText} alt="Click to Copy" readonly=true></textarea>
+  {#each textToCopy as line}
+
+    <textarea name="copy-text" class="copy-area" bind:value={line} on:hover={handleTooltip} on:mousemove={handleMouseMove} on:mouseleave={handleMouseAway} on:click={copyText} alt="Click to Copy" readonly=true></textarea>
+  {/each}
 </div>
 
 <style>
@@ -57,7 +58,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 70svh;
+    flex: 1;
   }
 
   .tooltip {
@@ -80,12 +81,12 @@
   .copy-area {
     display: flex;
     align-self: stretch;
+    flex-grow: 1;
     font-size: .8rem;
     font-family: monospace;
     line-height: .9rem;
-    height: 100%;
-    margin: 20px;
-    padding: 10px;
+    margin: .5rem 20px ;
+    padding: 5px;
     border-radius: 10px;
     cursor: pointer;
     user-select: none;
