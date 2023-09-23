@@ -1,6 +1,5 @@
 <script>
   import ModeToggle from "$lib/components/ModeToggle.svelte";
-
 </script>
 
 <nav class="navbar">
@@ -26,6 +25,7 @@
     align-items: center;
     box-sizing: border-box;
     width: 100%;
+    height: 8vh;
     padding: 10px 20px;
     box-shadow: 0px -12px 15px 5px rgba(0, 0, 0, 1);
   }
