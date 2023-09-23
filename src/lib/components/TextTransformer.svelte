@@ -8,7 +8,8 @@
     userText.transform(generatorType);
 
     let container = event.target.parentElement;
-    container.style.height = '20svh';
+    // container.style.height = '20svh';
+    container.style.flexShrink = '1';
 
     setTimeout(() => {
       document.querySelector('.input-text').scrollTop = 0;
@@ -22,22 +23,26 @@
 
 <style>
   .input-container {
+    flex-shrink: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: stretch;
     width: 100%;
-    height: 100%;
     background-color: var(--bg-color);
     color: var(--text-color);
+    height: auto;
+    flex-grow: 1;
   }
 
   .input-text {
     display: flex;
+    flex-grow: 1;
     align-self: stretch;
+    flex-direction: column;
     font-size: .8rem;
     font-family: monospace;
     line-height: .9rem;
-    height: calc(100svh * .6);
     margin: 20px;
     padding: 10px;
     border-radius: 10px;

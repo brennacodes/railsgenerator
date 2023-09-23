@@ -19,12 +19,14 @@ import clipboardy from "clipboardy";
     "decimal": "decimal",
     "binary": "binary",
     "time": "time",
+    "string": "string",
+    "array": "array",
   }
 
   function setFilters(tableType) {
     switch (tableType) {
       case "DDL":
-        toFilter = ["--", "CREATE UNIQUE", "CREATE INDEX", "CREATE SEQUENCE", "ALTER SEQUENCE", "COMMENT ON COLUMN"];
+        toFilter.push("--", "CREATE UNIQUE", "CREATE INDEX", "CREATE SEQUENCE", "ALTER SEQUENCE");
         break;
       case "PostgreSQL":
         toFilter;
@@ -34,60 +36,99 @@ import clipboardy from "clipboardy";
     }
   }
 
+  function trimWhitespace(arr) {
+    const trimmedArray = [];
+
+    for (let i = 0; i < arr.length; i++) {
+      trimmedArray.push(arr[i].trim());
+    }
+
+    return trimmedArray;
+  }
+
   function filterLines(lines) {
-    return lines.filter(line => {
-      return !(toFilter.some(filter => line.startsWith(filter)));
+    const noEmptyLines = lines.filter(line => line !== '\n');
+    const filtered = noEmptyLines.map(line => {
+      const noNewlines = line.replace(/\n/g, '');
+      const splitLine = noNewlines.split(/[,()]/);
+      const noEmptyStrings = splitLine.filter(element => element !== '');
+      const trimmed = trimWhitespace(noEmptyStrings);
+      if (!(toFilter.some(filter => trimmed[0].startsWith(filter)))) {
+        return trimmed;
+      }
     });
+
+    const onlyTables = filtered.filter((element) => {
+      return element !== undefined;
+    });
+
+    return onlyTables;
+  }
+
+  function parseLine(line) {
+    const directive = [];
+    line.forEach((string) => {
+      const id = /_id$/i;
+      const ddlId = /\(id\)/i;
+
+      let noQuotes = string.replace(/"/g, '');
+      let splitString = noQuotes.split(' ');
+
+      if (splitString[0] == 'CREATE' && splitString[1] == 'TABLE') {
+        directive.push(["table", splitString[2].replace(/s$/, '')]);
+      } else if (splitString[0] == 'id') {
+        null
+      } else if (splitString[0] == " " || splitString[0] == undefined || splitString[0] == "created_at" || splitString[0] == "updated_at") {
+        null
+      } else if (id.test(splitString[0]) || ddlId.test(splitString[splitString.length - 1])) {
+        directive.push([splitString[0].replace(/_id$/i, ''), "references"]);
+      } else {
+        directive.push([splitString[0], mapping[splitString[1]]]);
+      }
+    })
+
+    return directive;
   }
 
   function createDirectives(filteredLines) {
-    let directives = {};
+    let directives = [];
     filteredLines.forEach((line) => {
-      const id = /_id$/i;
-      const ddlId = /\(id\)/i;
-      let splitLine = line.split(' ').map(element => element.replace(/^[^a-zA-Z]+|[^a-zA-Z]+$/g, ''));
-
-      if (splitLine[0] == 'CREATE' && splitLine[1] == 'TABLE') {
-        directives["table"] = splitLine[2];
-      } else if (splitLine[0] == 'id') {
-        null
-      } else if (splitLine[0] == " " || splitLine[0] == undefined || splitLine[0] == "created_at" || splitLine[0] == "updated_at") {
-        null
-      } else if (id.test(splitLine[0]) || ddlId.test(splitLine[splitLine.length - 1])) {
-        directives[splitLine[0].replace(/_id$/i, '')] = "references";
-      } else {
-        directives[splitLine[0]] = mapping[splitLine[1]];
-      }
-
+      const parsedLine = parseLine(line);
+      let tableHash = {};
+      parsedLine.forEach((element) => {
+        tableHash[element[0]] = element[1];
+      })
+      directives.push(tableHash);
     });
+
     return directives;
   }
 
   function parseSQL(sql, type, generator) {
     setFilters(type);
 
-    const lines = sql.split('\n');
+    const lines = sql.split(';');
 
     // Filter out lines that start with "COMMENT ON COLUMN" or "ALTER TABLE"
-    const filteredLines = filterLines(lines)
-      .filter(element => element !== '')
-      .map(element => element.trimLeft())
-      .filter(element => /[a-zA-Z]/.test(element));
+    const filteredLines = filterLines(lines);
 
     let directives = createDirectives(filteredLines);
 
     // Split the SQL into individual CREATE TABLE statements
     const generatorCommands = []
-    for (const key in directives) {
-      if (key == 'table') {
-        let beginning = `rails generate ${generator} ${directives[key].substring(0, directives[key].length - 1)}`;
-        generatorCommands.push(beginning);
-      } else {
-        let ending = `${key}:${directives[key]}`;
-        generatorCommands.push(ending);
+    directives.forEach((directive) => {
+      let thisCommand = '';
+      for (const key in directive) {
+        if (key == 'table') {
+          thisCommand += `rails generate ${generator} ${directive[key]}`;
+        } else {
+          thisCommand += ` ${key}:${directive[key]}`;
+        }
       }
-    };
-    return generatorCommands.join(' ');
+      generatorCommands.push(thisCommand);
+    });
+
+    return generatorCommands
   }
 
   function updateStores(text) {
