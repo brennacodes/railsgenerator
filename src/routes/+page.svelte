@@ -6,11 +6,11 @@
   import ghWhite from '$images/github-mark-white.svg';
   import ghBlack from '$images/github-mark.png';
 
-  import Navbar from '$lib/components/Navbar.svelte';
-  import Footer from '$lib/components/Footer.svelte';
-	import FileLoader from '$lib/components/FileLoader.svelte';
-  import TextTransformer from '$lib/TextTransformer.svelte';
-  import TextCopier from '$lib/TextCopier.svelte';
+  import Navbar from '$components/Navbar.svelte';
+  import Footer from '$components/Footer.svelte';
+	import FileLoader from '$components/FileLoader.svelte';
+  import TextTransformer from '$components/TextTransformer.svelte';
+  import TextCopier from '$components/TextCopier.svelte';
 
   let userAccepted = false;
 
