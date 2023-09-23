@@ -3,13 +3,14 @@
   import { onMount } from 'svelte';
   import { generateImportStatements } from '$utils/importer.js';
   import { generators, generateFileArray } from '$utils/generators.js';
+  // generateImportStatments(generateFileArray(generators));
 
   const infoToDisplay = $$props['infoToDisplay']; // dynamic module name
   const reader = new FileReader();
 
   const loadInfo = async () => {
     try {
-      const response = await fetch(`public/rails_generators/${infoToDisplay}.txt`);
+      const response = await fetch(`rails_generators/${infoToDisplay}.txt`);
       if (!response.ok) {
         throw new Error('Failed to fetch the text file.');
       }
