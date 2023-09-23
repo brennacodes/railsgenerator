@@ -67,3 +67,8 @@ export const generators = {
     "test_unit:system"
   ]
 };
+
+export const examples = {
+  "dbdiagram.io": "postgresql",
+  "Postico": "DDL"
+}
