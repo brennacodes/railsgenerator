@@ -1,0 +1,87 @@
+CREATE TABLE "users" (
+  "id" integer PRIMARY KEY,
+  "uuid" uuid,
+  "role" integer,
+  "email" string,
+  "password" string,
+  "user_token" string,
+  "last_login" timestamp,
+  "created_at" timestamp,
+  "updated_at" timestamp
+);
+
+CREATE TABLE "user_recipe_requirements" (
+  "id" integer PRIMARY KEY,
+  "user_id" integer,
+  "user_recipe_id" integer,
+  "ingredients_required" array,
+  "ingredients_optional" array,
+  "quantity" integer,
+  "enable_admin_notifications" boolean,
+  "enable_user_notifications" boolean,
+  "measurement" integer,
+  "complete_by" timestamp,
+  "created_at" timestamp,
+  "updated_at" timestamp
+);
+
+CREATE TABLE "user_recipe_actions" (
+  "id" integer PRIMARY KEY,
+  "user_id" integer,
+  "user_recipe_id" integer,
+  "ingredients_began" array,
+  "ingredients_completed" array,
+  "status" integer,
+  "started_at" timestamp,
+  "completed_at" timestamp,
+  "created_at" timestamp,
+  "updated_at" timestamp
+);
+
+CREATE TABLE "user_recipes" (
+  "id" integer PRIMARY KEY,
+  "uuid" uuid,
+  "user_id" integer,
+  "name" string,
+  "description" string,
+  "ingredients" jsonb,
+  "rating" integer,
+  "visibility" integer,
+  "scoped_to" integer,
+  "created_at" timestamp,
+  "updated_at" timestamp
+);
+
+CREATE TABLE "recipe_ingredients" (
+  "id" integer PRIMARY KEY,
+  "user_recipe_id" integer,
+  "name" string,
+  "description" text,
+  "user_id" integer,
+  "quantity" integer,
+  "created_at" timestamp
+);
+
+COMMENT ON COLUMN "user_recipe_requirements"."quantity" IS 'active/deactivated/draft';
+
+COMMENT ON COLUMN "user_recipe_actions"."ingredients_began" IS 'array of recipe_ingredients uuids';
+
+COMMENT ON COLUMN "user_recipe_actions"."quantity" IS 'not_started/in_progress/complete';
+
+COMMENT ON COLUMN "user_recipes"."quantity" IS 'active/draft/inactive';
+
+COMMENT ON COLUMN "user_recipes"."visibility" IS 'public/private/invisible';
+
+COMMENT ON COLUMN "user_recipes"."scoped_to" IS 'user_type/organization/everyone';
+
+ALTER TABLE "user_recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+
+ALTER TABLE "recipe_ingredients" ADD FOREIGN KEY ("user_recipe_id") REFERENCES "user_recipes" ("id");
+
+ALTER TABLE "user_recipe_actions" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+
+ALTER TABLE "user_recipe_actions" ADD FOREIGN KEY ("user_recipe_id") REFERENCES "user_recipes" ("id");
+
+ALTER TABLE "user_recipe_requirements" ADD FOREIGN KEY ("user_recipe_id") REFERENCES "user_recipes" ("id");
+
+ALTER TABLE "user_recipe_requirements" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
