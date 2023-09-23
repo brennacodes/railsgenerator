@@ -42,17 +42,15 @@
     <h1 class="title">Rails Generator</h1>
     <p class="description">A blazing-fast tool to easily generate Rails generator commands from your SQL files.</p>
     <h2 class="inner-title">How does it work?</h2>
-    <p>You can use a site like <a href="https://dbdiagram.io">dbdiagram.io</a> to create and export your schema, or use an SQL file from another source.
+    <p class="notes">You can use a site like <a href="https://dbdiagram.io">dbdiagram.io</a> to create and export your schema, or use an SQL file from another source.
       Copy the SQL file contents and paste them into the text area where prompted.
       Your sparkling new generator commands will appear like magic.</p>
     <h2 class="inner-title">Some notes...</h2>
-    <ul>
-      <li>
-        Currently, this tool only generates commands for <code>resource</code> generators, and this has only been tuned to work with PostgreSQL files.
-      </li>
-    </ul>
+    <div class="notes">
+      Currently, this tool only generates commands for generators that use the format <code>|some_lowercase_model_name| |field_name:field_type|</code>(so it's not the best for things like controllers...yet), and it has only been tuned to work with PostgreSQL sql and DDL from Postico.
+      <br><small class=note><em>However... stay tuned, as there are plans to add reliable for more genators and SQL types in the near future!</em></small>
+    </div>
 
-      <small class=note><em>However... stay tuned, as there are plans to add support for more genators and SQL types in the near future!</em></small>
     <h2 class="inner-title">Ready to get started?</h2>
     <button class="start-btn" on:click={setUserAccepted}>Click Here!</button>
   </div>
@@ -72,6 +70,15 @@
 <Footer />
 
 <style>
+  .notes {
+    padding: 1.5rem;
+  }
+
+  code {
+    background-color: var(--bg-color-secondary);
+    color: red;
+  }
+
   .main-container {
     display: flex;
     flex-direction: column;
