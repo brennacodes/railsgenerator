@@ -68,6 +68,31 @@ export const generators = {
   ]
 };
 
+// array of all generator info .txt files
+export function generateFileArray() {
+  const formattedArray = [];
+
+  for (const key in generators) {
+    if (Object.hasOwnProperty.call(generators, key)) {
+      const elements = generators[key];
+      const formattedElements = elements.map((element) => {
+        if (element.includes(':')) { // Check if the element contains a colon
+          const parts = element.split(':');
+          const hashKey = parts[0].toLowerCase();
+          const elementName = parts[1].toLowerCase().replace(/:/g, '_');
+          return `${hashKey}_${elementName}`;
+        } else {
+          return element; // No colon found, don't modify the string
+        }
+      });
+      formattedArray.push(...formattedElements);
+    }
+  }
+
+  return formattedArray;
+}
+
+
 export const examples = {
   "dbdiagram.io": "postgresql",
   "Postico": "DDL"
