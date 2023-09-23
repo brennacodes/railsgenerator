@@ -1,10 +1,29 @@
 <script>
-  import { onMount, afterUpdate } from 'svelte';
-  import { fileContents } from '$stores/file_contents.js';
+	import { generatorInfo } from '$stores/generator_info.js';
+  import { onMount } from 'svelte';
+  import { generateImportStatements } from '$utils/importer.js';
+  import { generators, generateFileArray } from '$utils/generators.js';
 
-  $: contents = $fileContents;
+  const infoToDisplay = $$props['infoToDisplay']; // dynamic module name
+  const reader = new FileReader();
 
+  const loadInfo = async () => {
+    try {
+      const response = await fetch(`./src/assets/rails_generators/${infoToDisplay}.txt`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch the text file.');
+      }
+      const text = await response.text();
+      generatorInfo.update(text);
+    } catch (error) {
+      console.error('Error loading text file:', error);
+    }
+  };
+
+  // override modal styles
   onMount(() => {
+    loadInfo();
+
     const modal = document.querySelector('.wrap');
     modal.style.position = 'relative';
     modal.style.boxSizing = 'border-box';
@@ -63,10 +82,11 @@
   });
 </script>
 
-
-{#if contents}
-  <pre class="generator-help">{@html contents}</pre>
-{/if}
+<pre class="generator-help">
+  {#if $generatorInfo}
+    {@html $generatorInfo}
+  {/if}
+</pre>
 
 <style>
   .generator-help {

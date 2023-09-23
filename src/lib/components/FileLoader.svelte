@@ -1,12 +1,13 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { generators } from '$utils/generators.js';
+  import { generators, generateFileArray } from '$utils/generators.js';
   import { generator } from '$stores/generator.js';
-  import { fileContents } from '$stores/file_contents.js';
+  import { generatorInfo } from '$stores/generator_info.js';
   import { writable } from 'svelte/store';
 
-	import Modal from 'svelte-simple-modal';
+	import Modal, { bind } from 'svelte-simple-modal';
   import Popup from '$lib/components/Popup.svelte';
+
 
   const dispatch = createEventDispatcher();
   const modal = writable(null);
@@ -21,23 +22,22 @@
     dispatch('generatorselected', selectedOption);
   }
 
-  async function loadFileContents() {
+  function loadGeneratorInfo() {
     if (!selectedOption) return;
+    selectedOption = selectedOption.replace(/:/g, '_');
 
     $generator = selectedOption;
-    const showModal = () => modal.set(Popup);
 
-    showModal();
     const group = document.getElementById(selectedOption).classList[0];
 
-    try {
-      selectedOption = selectedOption.replace(/:/g, '_');
-      const response = await fetch(`src/assets/rails_generators/${group.toLowerCase()}_${selectedOption}.txt`);
-      let content = await response.text();
-      fileContents.update(content);
-    } catch (error) {
-      console.error('Error loading file:', error);
+    if (group != undefined) {
+      return `${group.toLowerCase()}_${selectedOption}`;
     }
+  }
+
+  const showModal = () => {
+    const infoToDisplay = loadGeneratorInfo();
+    modal.set(bind(Popup, { infoToDisplay: infoToDisplay }));
   }
 </script>
 
@@ -56,7 +56,7 @@
 
   {#if selectedOption}
     <Modal show={$modal}>
-      <button on:click={loadFileContents}>View Generator Details</button>
+      <button on:click={showModal}>View Generator Details</button>
     </Modal>
   {/if}
 </div>
