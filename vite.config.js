@@ -11,6 +11,7 @@ export default defineConfig({
         // your custom rules
         'src/*.{js,jsx,svelte,json,css,html}',
         'src/**/*.{js,jsx,ts,tsx,svelte}',
+        'public/**/*.{txt}',
         'src/**/**/*.{js,jsx,ts,tsx,svelte,svg,png,txt}',
         'src/**/**/**/*.{js,jsx,ts,tsx,svelte,svg,png,txt}',
       ]
