@@ -1,11 +1,16 @@
 <script>
   import { afterUpdate, getContext, onMount } from 'svelte';
+  import { generator } from "$stores/generator.js";
   import { userText } from '$stores/text.js';
+
   import ghWhite from '$assets/github-mark-white.svg';
   import ghBlack from '$assets/github-mark.png';
+
+  import Navbar from '$lib/components/Navbar.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+	import FileLoader from '$lib/components/FileLoader.svelte';
   import TextTransformer from '$lib/TextTransformer.svelte';
   import TextCopier from '$lib/TextCopier.svelte';
-	import Navbar from '$lib/components/Navbar.svelte';
 
   let userAccepted = false;
 
@@ -13,6 +18,10 @@
 
   function setUserAccepted() {
     userAccepted = true;
+  }
+
+  function handleSelection(event) {
+    generator.update(event.detail);
   }
 
   onMount(() => {
@@ -26,6 +35,7 @@
 
 <Navbar />
 
+<div class="main-container">
 {#if userAccepted == false}
   <div class="intro">
     <h1 class="title">Rails Generator</h1>
@@ -46,28 +56,43 @@
     <button class="start-btn" on:click={setUserAccepted}>Click Here!</button>
   </div>
 {:else}
-  <TextTransformer />
+  <FileLoader on:generatorselected={handleSelection}/>
+
+  {#if $generator != ''}
+    <TextTransformer />
+  {/if}
 
   {#if $userText != ''}
     <TextCopier />
   {/if}
 {/if}
-
-<div class="footer">
-  <a class="icon-link" href="www.github.com/brennacodes" target="_blank">
-    <div id="github-logo" alt="GitHub Logo" width="20" height="20" style="background-image: var(--gh-icon);"/>
-  </a>
 </div>
 
+<Footer />
+
 <style>
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 8vh - 6vh);
+    width: 100%;
+    box-sizing: border-box;
+    contain: strict;
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+  }
+
   .note {
     text-align: center;
     margin-bottom: 2rem;
   }
   .intro {
     height: 100%;
-    padding: 4rem;
+    padding: 2rem;
     font-size: 1rem;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
 		background-color: var(--bg-color) !important;
