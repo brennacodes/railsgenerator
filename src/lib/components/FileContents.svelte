@@ -1,7 +1,7 @@
 <script>
-  import { fileContents } from '$stores/file_contents.js';
+  import { generatorInfo } from '$stores/generator_info.js';
 
-  $: contents = $fileContents;
+  $: contents = $generatorInfo;
 </script>
 
 
