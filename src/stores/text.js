@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
-import { pasteToGenerate } from '$lib/utils/transformer';
+// import { generator } from '$stores/generator';
+import { handleSQL } from '$lib/utils/transformer';
 
 let _userText = '';
 
@@ -8,8 +9,8 @@ const { subscribe, set } = userTextStore;
 
 export const userText = {
   subscribe,
-  transform: () => {
-    pasteToGenerate();
+  transform: (text) => {
+    handleSQL(text);
   },
   update: (text) => {
     set(text);
