@@ -1,4 +1,6 @@
 <script>
+  // impart app.css
+  import '$styles/app.css';
   import { afterUpdate, getContext, onMount } from 'svelte';
   import { generator } from "$stores/generator.js";
   import { userText } from '$stores/text.js';
