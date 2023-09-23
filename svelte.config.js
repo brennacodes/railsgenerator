@@ -25,7 +25,7 @@ const config = {
         $assets: path.resolve('./src/assets'),
         $images: path.resolve('./src/assets/images'),
         $components: path.resolve('./src/lib/components'),
-        $generators: path.resolve('./public/rails_generators'),
+        $generators: path.resolve('./static/rails_generators'),
       }
     }
 
