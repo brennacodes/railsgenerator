@@ -10,7 +10,9 @@
 
   const loadInfo = async () => {
     try {
-      const response = await fetch(`rails_generators/${infoToDisplay}.txt`);
+      const url = `rails_generators/${infoToDisplay}.txt`;
+      console.log('Fetching URL:', url);
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch the text file.');
       }
