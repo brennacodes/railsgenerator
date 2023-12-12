@@ -106,6 +106,7 @@
     {#if textTransformed}
       <div on:click={reset} on:keydown={reset} role="button" tabindex=0><img src={resetIcon} alt="reset icon button" class="reset-button"/></div>
     {/if}
+
   </div>
 
   <div class="question-mark" on:click={() => userAccepted.reset()} on:keydown={() => userAccepted.reset()} role="button" tabindex=0>
@@ -115,17 +116,22 @@
 
 <style>
   .selection-row {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
     align-items: center;
+    width: 100%;
+    margin-top: 1.5rem;
   }
 
   .question-mark {
     display: flex;
+    justify-self: flex-end;
+    margin-right: 1.5rem;
   }
 
   .question-button {
     display: flex;
+    justify-self: flex-end;
   }
 
   .reset-button {
@@ -136,10 +142,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
     gap: 1rem;
 
-    margin-top: 1.5rem;
     margin-bottom: inherit;
     margin-left: 1.5rem;
     margin-right: 1.5rem;
