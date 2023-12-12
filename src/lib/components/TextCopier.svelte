@@ -1,10 +1,10 @@
 <script>
 	import { tooltip } from '$lib/utils/tooltip.js';
 	import { onMount, afterUpdate } from "svelte";
-  import { userText } from '$stores/text.js';
+  import { copyableText } from '$stores/copyable_text.js';
   import clipboardy from 'clipboardy';
 
-  $: textToCopy = $userText;
+  $: textToCopy = $copyableText;
 
   function copyText(event) {
     let text = event.target.value;

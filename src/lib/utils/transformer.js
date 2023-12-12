@@ -1,6 +1,7 @@
-import { userText } from "$stores/text";
+import { copyableText } from "$stores/copyable_text";
+// import { userText } from "$stores/text";
 // import { generator } from "$stores/generator";
-import clipboardy from "clipboardy";
+// import clipboardy from "clipboardy";
 
   let toFilter = ["ALTER TABLE", "COMMENT ON COLUMN"];
 
@@ -106,7 +107,7 @@ import clipboardy from "clipboardy";
       parsedLine.forEach((element) => {
         if (element[1] == undefined) return;
         if (element[0] == "table") {
-          directives.push(`Table ${element[1]}`);
+          directives.push(`${element[1]}`);
         } else {
           directives.push(`${element[0]}:${element[1]}`);
         }
@@ -172,7 +173,7 @@ import clipboardy from "clipboardy";
   export function handleInput(pasted, generator) {
 		try {
       let joined = parseSQL(pasted, "DBML", generator);
-      userText.update(joined);
+      copyableText.update(joined);
       console.log("joined: ", joined)
 		} catch(error) {
       console.log("Text: ", pasted)

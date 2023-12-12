@@ -30,7 +30,6 @@
 
   onMount(() => {
     githubIcon = window.document.body.classList.contains("light") ? ghBlack : ghWhite ;
-    modal.set(bind(Intro));
   });
 
   afterUpdate(() => {

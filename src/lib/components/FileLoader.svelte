@@ -1,10 +1,12 @@
 <script>
   import { createEventDispatcher, getContext, setContext, afterUpdate } from 'svelte';
   import { generators, generateFileArray } from '$utils/generators.js';
+  import { writable } from 'svelte/store';
   import { generator } from '$stores/generator.js';
   import { generatorInfo } from '$stores/generator_info.js';
-  import { writable } from 'svelte/store';
   import { userText } from '$stores/text.js';
+  import { transformed } from '$stores/transformed.js';
+  import { handleInput } from '$utils/transformer.js';
 
 	import Modal, { bind } from 'svelte-simple-modal';
   import Popup from '$lib/components/Popup.svelte';
@@ -12,13 +14,13 @@
 
   const dispatch = createEventDispatcher();
   const modal = writable(null);
-  const resetIconBlack = "https://icons8.com/icon/eYceOAlmU2md/reset"
-  const resetIconWhite = "https://icons8.com/icon/eYceOAlmU2md/reset"
+  const resetIconBlack = "https://img.icons8.com/sf-black-filled/32/recurring-appointment.png"
+  const resetIconWhite = "https://img.icons8.com/sf-black-filled/32/ffffff/recurring-appointment.png"
   const resetIcon = window.matchMedia('(prefers-color-scheme: dark)').matches ? resetIconWhite : resetIconBlack;
 
   $: selectedOption = 'Select a generator...';
   $: selected = $generator;
-  $: transformed = getContext('transformed');
+  $: textTransformed = $transformed;
   $: isDisabled = selectedOption === "Select a generator..." || transformed == false ? '' : 'disabled';
 
   function updateSelected(event) {
@@ -54,13 +56,32 @@
     $generator = selectedOption;
     dispatch('generatorselected', selectedOption);
     modal.set(null);
-    userText.update('');
+    userText.reset();
+    transformed.reset();
   }
 
+  afterUpdate(() => {
+    let container = document.querySelector('.input-text');
+    if (!container) return;
+    let pasted = container.value;
+    console.log("pasted: ", pasted)
+    // container.style.height = '20svh';
+    if (pasted == "" || pasted == undefined || pasted == null) return;
+
+
+    setTimeout(() => {
+      userText.update(pasted)
+      handleInput(pasted, selected);
+      transformed.true();
+
+      container.scrollTop = 0;
+      container.style.flexShrink = '1';
+    }, 100);
+  });
 </script>
 
 <div class="generator-selection">
-  <select name="select-generator" bind:value={selectedOption} on:change={updateSelected} {isDisabled}>
+  <select class="selector" name="select-generator" bind:value={selectedOption} on:change={updateSelected} disabled={isDisabled}>
     <option value={selectedOption}>{selectedOption}</option>
 
     {#each Object.keys(generators) as group}
@@ -78,12 +99,16 @@
     </Modal>
   {/if}
 
-  {#if transformed}
-    <div on:click={reset} on:keydown={reset} role="button" tabindex=0><img src={resetIcon} alt="reset icon button"/></div>
+  {#if textTransformed}
+    <div on:click={reset} on:keydown={reset} role="button" tabindex=0><img src={resetIcon} alt="reset icon button" class="reset-button"/></div>
   {/if}
 </div>
 
 <style>
+  .reset-button {
+    display: flex;
+  }
+
   .generator-selection {
     display: flex;
     flex-direction: row;

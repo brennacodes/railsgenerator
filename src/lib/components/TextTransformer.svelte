@@ -2,12 +2,15 @@
   import { userText } from '$stores/text.js';
   import { generator } from '$stores/generator.js';
   import { handleInput } from '$lib/utils/transformer';
-	import { afterUpdate, setContext } from 'svelte';
+  import { transformed } from '$stores/transformed.js';
 
-  $: pasted = userText.read() || '';
+  $: pasted = $userText || '';
   $: generatorType = $generator;
 
   function handlePaste(event) {
+    let selected = document.querySelector('.selector').value;
+    if (selected == "Select a generator..." || selected == "") return;
+
     let container = event.target.parentElement;
     // container.style.height = '20svh';
     container.style.flexShrink = '1';
@@ -18,6 +21,7 @@
 
       userText.update(pasted)
       handleInput(pasted, generatorType);
+      transformed.true();
     }, 100);
   }
 </script>
