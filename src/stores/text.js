@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 // import { generator } from '$stores/generator';
-import { handleSQL } from '$lib/utils/transformer';
+import { handleInput } from '$lib/utils/transformer';
 
 let _userText = '';
 
@@ -10,7 +10,8 @@ const { subscribe, set } = userTextStore;
 export const userText = {
   subscribe,
   transform: (text) => {
-    handleSQL(text);
+    let parsed = handleInput(text);
+    set(parsed);
   },
   update: (text) => {
     set(text);

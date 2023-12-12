@@ -1,24 +1,29 @@
 <script>
   import { userText } from '$stores/text.js';
   import { generator } from '$stores/generator.js';
+  import { handleInput } from '$lib/utils/transformer';
 
+  $: pasted = '';
   $: generatorType = $generator;
+  $: transformed = $userText;
 
   function handlePaste(event) {
-    userText.transform(generatorType);
-
     let container = event.target.parentElement;
     // container.style.height = '20svh';
     container.style.flexShrink = '1';
 
     setTimeout(() => {
-      document.querySelector('.input-text').scrollTop = 0;
-    }, 10);
+      const textarea = document.querySelector('.input-text')
+      textarea.scrollTop = 0;
+
+      userText.update(pasted)
+      handleInput(pasted, generatorType);
+    }, 100);
   }
 </script>
 
 <div class="input-container">
-  <textarea name="input-text" class="input-text" on:paste={handlePaste} placeholder="Paste your SQL here" ></textarea>
+  <textarea name="input-text" class="input-text" on:paste={handlePaste} placeholder="Paste your SQL here" bind:value={pasted}></textarea>
 </div>
 
 <style>
