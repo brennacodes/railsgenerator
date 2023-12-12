@@ -2,10 +2,10 @@
   import { userText } from '$stores/text.js';
   import { generator } from '$stores/generator.js';
   import { handleInput } from '$lib/utils/transformer';
+	import { afterUpdate, setContext } from 'svelte';
 
-  $: pasted = '';
+  $: pasted = userText.read() || '';
   $: generatorType = $generator;
-  $: transformed = $userText;
 
   function handlePaste(event) {
     let container = event.target.parentElement;

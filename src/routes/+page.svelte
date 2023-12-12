@@ -1,8 +1,10 @@
 <script>
   import '$src/app.css';
-  import { afterUpdate, getContext, onMount } from 'svelte';
+  import Modal, { bind } from 'svelte-simple-modal';
+  import { afterUpdate, getContext, onMount, setContext } from 'svelte';
   import { generator } from "$stores/generator.js";
   import { userText } from '$stores/text.js';
+  import { writable } from 'svelte/store';
 
   import ghWhite from '$images/github-mark-white.svg';
   import ghBlack from '$images/github-mark.png';
@@ -14,6 +16,7 @@
   import TextCopier from '$components/TextCopier.svelte';
 
   let userAccepted = false;
+  const modal = writable(null);
 
   $: githubIcon = '';
 
@@ -27,6 +30,7 @@
 
   onMount(() => {
     githubIcon = window.document.body.classList.contains("light") ? ghBlack : ghWhite ;
+    modal.set(bind(Intro));
   });
 
   afterUpdate(() => {
@@ -38,7 +42,7 @@
 
 <div class="main-container">
 {#if userAccepted == false}
-  <div class="intro">
+  <div class="intro" modal=true role=dialog>
     <h1 class="title">Rails Generator</h1>
     <p class="description">A blazing-fast tool to easily generate Rails generator commands from your SQL files.</p>
     <h2 class="inner-title">How does it work?</h2>
@@ -70,6 +74,32 @@
 <Footer />
 
 <style>
+  h1 {
+    background: none;
+  }
+
+  a {
+    color: var(--link-color);
+  }
+
+  .intro {
+    height: 60% !important;
+    width: 70% !important;
+    padding: 1rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+    contain: strict;
+    overflow-y: scroll;
+    position: relative;
+    top: 20%;
+    background: #d6d6d629;
+    display: flex;
+    flex-direction: column;
+    border-radius: .5rem;
+    border: 1px solid black;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
+  }
+
   .notes {
     padding: 1.5rem;
   }
@@ -95,23 +125,12 @@
     text-align: center;
     margin-bottom: 2rem;
   }
-  .intro {
-    height: 100%;
-    padding: 2rem;
-    font-size: 1rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-		background-color: var(--bg-color) !important;
-		color: var(--text-color) !important;
-  }
 
   .title {
     margin: 0;
     line-height: 1.15;
     font-size: 2rem;
     text-align: center;
-		background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
   }
 
@@ -120,7 +139,6 @@
     line-height: 1.5;
     font-size: 1.5rem;
     margin: 1rem 4rem 2rem 4rem;
-    background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
   }
 
@@ -129,7 +147,6 @@
     line-height: 1.15;
     font-size: 1.5rem;
     text-align: center;
-    background-color: var(--bg-color) !important;
 		color: var(--text-color) !important;
   }
 

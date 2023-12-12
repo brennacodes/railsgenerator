@@ -1,25 +1,38 @@
 <script>
-  import { createEventDispatcher, getContext, onMount } from 'svelte';
+	import { userText } from '$stores/text.js';
+  import { afterUpdate, createEventDispatcher, getContext, onMount } from 'svelte';
   import { generators, examples } from '$utils/generators.js';
   import { generator } from '$stores/generator.js';
   import { fileContents } from '$stores/file_contents.js';
   import { writable } from 'svelte/store';
+  import { userText } from '$stores/text.js';
 
 	import Modal from 'svelte-simple-modal';
   import Popup from '$lib/components/Popup.svelte';
+
+  const resetIconBlack = "https://icons8.com/icon/eYceOAlmU2md/reset"
+  const resetIconWhite = "https://icons8.com/icon/eYceOAlmU2md/reset"
+  const resetIcon = window.matchMedia('(prefers-color-scheme: dark)').matches ? resetIconWhite : resetIconBlack;
 
   const dispatch = createEventDispatcher();
   const modal = writable(null);
 
   let currentContext = getContext('filedata');
 
-  $: selectedOption = '';
+  $: selectedOption = 'Select a generator...';
   $: selected = $generator;
+  $: transformed = getContext('transformed');
+  $: isDisabled = selectedOption === "Select a generator..." || transformed == false ? false : "disabled";
 
   onMount(() => {
     if (currentContext === 'example') {
       selectedOption = examples[0];
     }
+  });
+
+  afterUpdate(() => {
+    transformed = getContext('transformed');
+
   });
 
   function updateSelected(event) {
@@ -50,11 +63,19 @@
       console.error('Error loading file:', error);
     }
   }
+
+  function reset() {
+    selectedOption = 'Select a generator...';
+    $generator = selectedOption;
+    dispatch('generatorselected', selectedOption);
+    modal.set(null);
+    userText.update('');
+  }
 </script>
 
 <div class="generator-selection">
-  <select name="select-generator" bind:value={selectedOption} on:change={updateSelected}>
-    <option value="">Select a generator</option>
+  <select name="select-generator" bind:value={selectedOption} on:change={updateSelected} >
+    <option value={selectedOption}>{selectedOption}</option>
 
     {#each Object.keys(generators) as group}
       <optgroup label={group}>
@@ -65,10 +86,14 @@
     {/each}
   </select>
 
-  {#if selectedOption}
+  {#if selectedOption !== 'Select a generator...'}
     <Modal show={$modal}>
       <button on:click={loadFileContents}>View Generator Details</button>
     </Modal>
+  {/if}
+
+  {#if transformed}
+      <img src={resetIcon} on:click={reset} alt="reset icon button"/>
   {/if}
 
   {#if currentContext === 'example'}
