@@ -132,7 +132,7 @@
   }
 
   .intro {
-    height: 60% !important;
+    height: 80% !important;
     width: 70% !important;
     padding: 1rem;
     font-size: 1rem;
@@ -140,7 +140,7 @@
     contain: strict;
     overflow-y: scroll;
     position: relative;
-    top: 20%;
+    top: 10%;
     background: #d6d6d629;
     display: flex;
     flex-direction: column;
