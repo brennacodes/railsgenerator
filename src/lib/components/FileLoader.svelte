@@ -7,6 +7,7 @@
   import { userText } from '$stores/text.js';
   import { transformed } from '$stores/transformed.js';
   import { handleInput } from '$utils/transformer.js';
+  import { userAccepted } from '$stores/user_accepted.js';
 
 	import Modal, { bind } from 'svelte-simple-modal';
   import Popup from '$lib/components/Popup.svelte';
@@ -17,6 +18,9 @@
   const resetIconBlack = "https://img.icons8.com/sf-black-filled/32/recurring-appointment.png"
   const resetIconWhite = "https://img.icons8.com/sf-black-filled/32/ffffff/recurring-appointment.png"
   const resetIcon = window.matchMedia('(prefers-color-scheme: dark)').matches ? resetIconWhite : resetIconBlack;
+  const questionIconBlack = "https://img.icons8.com/ios-filled/25/000000/help.png";
+  const questionIconWhite = "https://img.icons8.com/ios-filled/25/ffffff/help.png";
+  const questionIcon = window.matchMedia('(prefers-color-scheme: dark)').matches ? questionIconWhite : questionIconBlack;
 
   $: selectedOption = 'Select a generator...';
   $: selected = $generator;
@@ -79,31 +83,51 @@
   });
 </script>
 
-<div class="generator-selection">
-  <select class="selector" name="select-generator" bind:value={selectedOption} on:change={updateSelected} disabled={isDisabled}>
-    <option value={selectedOption}>{selectedOption}</option>
+<div class="selection-row">
+  <div class="generator-selection">
+    <select class="selector" name="select-generator" bind:value={selectedOption} on:change={updateSelected} disabled={isDisabled}>
+      <option value={selectedOption}>{selectedOption}</option>
 
-    {#each Object.keys(generators) as group}
-      <optgroup label={group}>
-        {#each generators[group] as option}
-          <option value={option} class={group} id={option}>{option}</option>
-        {/each}
-      </optgroup>
-    {/each}
-  </select>
+      {#each Object.keys(generators) as group}
+        <optgroup label={group}>
+          {#each generators[group] as option}
+            <option value={option} class={group} id={option}>{option}</option>
+          {/each}
+        </optgroup>
+      {/each}
+    </select>
 
-  {#if selectedOption}
-    <Modal show={$modal}>
-      <button on:click={showModal}>View Generator Details</button>
-    </Modal>
-  {/if}
+    {#if selectedOption}
+      <Modal show={$modal}>
+        <button on:click={showModal}>View Generator Details</button>
+      </Modal>
+    {/if}
 
-  {#if textTransformed}
-    <div on:click={reset} on:keydown={reset} role="button" tabindex=0><img src={resetIcon} alt="reset icon button" class="reset-button"/></div>
-  {/if}
+    {#if textTransformed}
+      <div on:click={reset} on:keydown={reset} role="button" tabindex=0><img src={resetIcon} alt="reset icon button" class="reset-button"/></div>
+    {/if}
+  </div>
+
+  <div class="question-mark" on:click={() => userAccepted.reset()} on:keydown={() => userAccepted.reset()} role="button" tabindex=0>
+    <img src={questionIcon} alt="question mark icon button" class="question-button"/>
+  </div>
 </div>
 
 <style>
+  .selection-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .question-mark {
+    display: flex;
+  }
+
+  .question-button {
+    display: flex;
+  }
+
   .reset-button {
     display: flex;
   }
