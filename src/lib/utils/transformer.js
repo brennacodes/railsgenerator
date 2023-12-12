@@ -158,7 +158,6 @@ import { copyableText } from "$stores/copyable_text";
     if (type == "DBML") {
       directives = createDBMLDirectives(filteredLines);
       generatorCommands.push(`rails generate ${generator} ${directives}`);
-      console.log("Commands: ", generatorCommands)
       return generatorCommands;
     } else {
       directives = createDirectives(filteredLines);
@@ -174,9 +173,7 @@ import { copyableText } from "$stores/copyable_text";
 		try {
       let joined = parseSQL(pasted, "DBML", generator);
       copyableText.update(joined);
-      console.log("joined: ", joined)
 		} catch(error) {
-      console.log("Text: ", pasted)
 			console.error("Failed: ", error);
 		}
   }

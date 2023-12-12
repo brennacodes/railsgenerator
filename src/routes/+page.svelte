@@ -4,6 +4,7 @@
   import { afterUpdate, getContext, onMount, setContext } from 'svelte';
   import { generator } from "$stores/generator.js";
   import { userText } from '$stores/text.js';
+  import { userAccepted } from '$stores/user_accepted.js';
   import { writable } from 'svelte/store';
 
   import ghWhite from '$images/github-mark-white.svg';
@@ -15,13 +16,13 @@
   import TextTransformer from '$components/TextTransformer.svelte';
   import TextCopier from '$components/TextCopier.svelte';
 
-  let userAccepted = false;
   const modal = writable(null);
 
   $: githubIcon = '';
+  $: accepted = $userAccepted;
 
   function setUserAccepted() {
-    userAccepted = true;
+    userAccepted.true();
   }
 
   function handleSelection(event) {
@@ -40,7 +41,7 @@
 <Navbar />
 
 <div class="main-container">
-{#if userAccepted == false}
+{#if accepted == false}
   <div class="intro" modal=true role=dialog>
     <h1 class="title">Rails Generator</h1>
     <p class="description">A blazing-fast tool to easily generate Rails generator commands from your SQL files.</p>

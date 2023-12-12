@@ -1,13 +1,19 @@
 <script>
   import ModeToggle from "$lib/components/ModeToggle.svelte";
+  import { userAccepted } from '$stores/user_accepted.js';
 </script>
 
 <nav class="navbar">
-  <h3 class="site-name">Rails Generator</h3>
+  <h3 class="site-name"><a on:click={() => userAccepted.reset()} href="">Rails Generator</a></h3>
   <ModeToggle />
 </nav>
 
 <style>
+  a {
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
   .site-name {
     margin: 0;
   }

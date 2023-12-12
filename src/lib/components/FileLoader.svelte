@@ -64,7 +64,6 @@
     let container = document.querySelector('.input-text');
     if (!container) return;
     let pasted = container.value;
-    console.log("pasted: ", pasted)
     // container.style.height = '20svh';
     if (pasted == "" || pasted == undefined || pasted == null) return;
 
