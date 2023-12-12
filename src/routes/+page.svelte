@@ -9,6 +9,8 @@
 
   import ghWhite from '$images/github-mark-white.svg';
   import ghBlack from '$images/github-mark.png';
+  import dbml from '$images/DBML.png';
+  import sql from '$images/sql_exports.png';
 
   import Navbar from '$components/Navbar.svelte';
   import Footer from '$components/Footer.svelte';
@@ -48,7 +50,20 @@
     <h2 class="inner-title">How does it work?</h2>
     <p class="notes">You can use a site like <a href="https://dbdiagram.io">dbdiagram.io</a> to create and export your schema, or use an SQL file from another source.
       Copy the SQL file contents and paste them into the text area where prompted.
-      Your sparkling new generator commands will appear like magic.</p>
+      If you're using <span class="db-diagram">dbdiagram.io</span>, you can find the export button at the top middle of the screen. You can also copy/paste the DBML code directly into the text area.
+      <span class="figures">
+        <figure alt="DBML code">
+          <img src={dbml} alt="DBML export button" class="dbml-img">
+          <figcaption>DBML example</figcaption>
+        </figure>
+        <figure alt="SQL exports">
+          <img src={sql} alt="SQL export options" class="sql-img">
+          <figcaption>SQL Export Options</figcaption>
+        </figure>
+      </span>
+
+      Your sparkling new generator commands will appear like magic.
+    </p>
     <h2 class="inner-title">Some notes...</h2>
     <div class="notes">
       Currently, this tool only generates commands for generators that use the format <code>|some_lowercase_model_name| |field_name:field_type|</code>(so it's not the best for things like controllers...yet), and it has only been tuned to work with PostgreSQL sql and DDL from Postico.
@@ -74,6 +89,40 @@
 <Footer />
 
 <style>
+  .figures {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: space-around;
+    align-items: center;
+  }
+  figure {
+    box-sizing: border-box;
+    contain: content;
+    width: fit-content;
+    border: thin #c0c0c0 solid;
+    display: flex;
+    flex-flow: column;
+    padding: 5px;
+  }
+
+  .sql-img {
+    width: auto;
+    max-height: 30vh;
+  }
+
+  .dbml-img {
+    width: auto;
+    max-height: 30vh;
+  }
+
+  figcaption {
+    background-color: #52525283;
+    color: #fff;
+    font: italic smaller sans-serif;
+    padding: 3px;
+    text-align: center;
+  }
   h1 {
     background: none;
   }
