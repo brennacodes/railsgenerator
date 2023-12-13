@@ -3,9 +3,11 @@
   import { generator } from '$stores/generator.js';
   import { handleInput } from '$lib/utils/transformer';
   import { transformed } from '$stores/transformed.js';
+  import { inputType } from '$stores/input_type.js';
 
   $: pasted = $userText || '';
   $: generatorType = $generator;
+  $: selectedType = $inputType;
 
   function handlePaste(event) {
     let selected = document.querySelector('.selector').value;
@@ -27,7 +29,7 @@
 </script>
 
 <div class="input-container">
-  <textarea name="input-text" class="input-text" on:paste={handlePaste} placeholder="Paste your SQL here" bind:value={pasted}></textarea>
+  <textarea name="input-text" class="input-text" on:paste={handlePaste} placeholder="Paste your {selectedType} here" bind:value={pasted}></textarea>
 </div>
 
 <style>

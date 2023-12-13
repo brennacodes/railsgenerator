@@ -24,7 +24,7 @@ import { copyableText } from "$stores/copyable_text";
     "array": "array",
   }
 
-  let types = {
+  let breaks = {
     "DBML": "\n",
     "DDL": ";",
     "PostgreSQL": ";",
@@ -60,7 +60,7 @@ import { copyableText } from "$stores/copyable_text";
       const splitLine = noNewlines.split(/[,()]/);
       const noEmptyStrings = splitLine.filter(element => element !== '');
       const trimmed = trimWhitespace(noEmptyStrings);
-      if (!(toFilter.some(filter => trimmed[0].startsWith(filter)))) {
+      if (trimmed.length > 0 && !(toFilter.some(filter => trimmed[0].startsWith(filter)))) {
         return trimmed;
       }
     });
@@ -103,10 +103,13 @@ import { copyableText } from "$stores/copyable_text";
   function createDBMLDirectives(filteredLines) {
     let directives = [];
     filteredLines.forEach((line) => {
+      // line = ['Table users {']
       const parsedLine = parseLine(line);
+      // parsedLine = ['table', 'users']
+      debugger;
       parsedLine.forEach((element) => {
         if (element[1] == undefined) return;
-        if (element[0] == "table") {
+        if (element[0] == "Table") {
           directives.push(`${element[1]}`);
         } else {
           directives.push(`${element[0]}:${element[1]}`);
@@ -147,26 +150,27 @@ import { copyableText } from "$stores/copyable_text";
   function parseSQL(sql, type = "DBML", generator) {
     if (type !== "DBML") { setFilters(type); }
 
-    const lines = sql.split(types[type]);
+    // Split the input into individual lines
+    const lines = sql.split(breaks[type]);
 
     // Filter out lines that start with "COMMENT ON COLUMN" or "ALTER TABLE"
     const filteredLines = filterLines(lines);
 
-    // Split the SQL into individual CREATE TABLE statements
+    // Split the input into separate directives
     const generatorCommands = []
     let directives;
     if (type == "DBML") {
       directives = createDBMLDirectives(filteredLines);
+      debugger;
       generatorCommands.push(`rails generate ${generator} ${directives}`);
-      return generatorCommands;
     } else {
       directives = createDirectives(filteredLines);
       directives.forEach((directive) => {
         const thisCommand = createDirective(directive, generator);
         generatorCommands.push(thisCommand);
-        return generatorCommands;
       });
     }
+    return generatorCommands;
   }
 
   export function handleInput(pasted, generator) {
